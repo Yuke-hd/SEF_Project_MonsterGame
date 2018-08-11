@@ -119,15 +119,18 @@ public class Login extends JFrame {
 		} 
 	}
 
+
+
 	private boolean auth(String userName, char[] pwd) {
 		for (int i = 0; i < userList.size(); i++) {
 			if (userName.equals(userList.get(i).getUserName())) {
 				char[] pwd0 = userList.get(i).getPwd();
-				if (pwd0.length != pwd.length || pwd0.length == 0 || pwd.length == 0) {
-					return false; 
+				char[] pwd1 = pwd;
+				if (pwd0.length != pwd1.length || pwd0.length == 0 || pwd1.length == 0) {
+					return false;
 				}
 				for (int j = 0; j < pwd0.length; j++) {
-					if (pwd0[j] != pwd[j]) {
+					if (pwd0[j] != pwd1[j]) {
 						return false;
 					}
 				}

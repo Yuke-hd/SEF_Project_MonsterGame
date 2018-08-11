@@ -1,10 +1,7 @@
 package monsterGame;
 
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.print.attribute.standard.RequestingUserName;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,8 +13,8 @@ public class SignUp extends JFrame {
 	User _user;
 
 	JFrame frame = new JFrame("Sign Up");
-	
 
+	
 	public SignUp() {
 		// TODO Auto-generated constructor stub
 	}
@@ -25,8 +22,8 @@ public class SignUp extends JFrame {
 	public User signUp0() {
 		// SignUp signUp = new SignUp();
 		// Setting the width and height of frame
-		frame.setLocationRelativeTo(null);
 		frame.setSize(350, 200);
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		// frame.setDefaultCloseOperation();
 		/*

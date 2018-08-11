@@ -124,7 +124,7 @@ public class Login extends JFrame {
 			if (userName.equals(userList.get(i).getUserName())) {
 				char[] pwd0 = userList.get(i).getPwd();
 				if (pwd0.length != pwd.length || pwd0.length == 0 || pwd.length == 0) {
-					return false;
+					return false; 
 				}
 				for (int j = 0; j < pwd0.length; j++) {
 					if (pwd0[j] != pwd[j]) {

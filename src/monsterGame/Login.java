@@ -28,7 +28,7 @@ public class Login extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setSize(350, 200);
 		frame.setResizable(false); 
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/*
 		 * 创建面板，这个类似于 HTML 的 </div> 标签 我们可以创建多个面板并在 JFrame 中指定位置 面板中我们可以添加文本字段，按钮及其他组件。
 		 */
@@ -123,12 +123,11 @@ public class Login extends JFrame {
 		for (int i = 0; i < userList.size(); i++) {
 			if (userName.equals(userList.get(i).getUserName())) {
 				char[] pwd0 = userList.get(i).getPwd();
-				char[] pwd1 = pwd;
-				if (pwd0.length != pwd1.length || pwd0.length == 0 || pwd1.length == 0) {
+				if (pwd0.length != pwd.length || pwd0.length == 0 || pwd.length == 0) {
 					return false;
 				}
 				for (int j = 0; j < pwd0.length; j++) {
-					if (pwd0[j] != pwd1[j]) {
+					if (pwd0[j] != pwd[j]) {
 						return false;
 					}
 				}

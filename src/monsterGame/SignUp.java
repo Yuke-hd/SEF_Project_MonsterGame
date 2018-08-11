@@ -16,6 +16,7 @@ public class SignUp extends JFrame {
 	User _user;
 
 	JFrame frame = new JFrame("Sign Up");
+	
 
 	public SignUp() {
 		// TODO Auto-generated constructor stub
@@ -24,7 +25,9 @@ public class SignUp extends JFrame {
 	public User signUp0() {
 		// SignUp signUp = new SignUp();
 		// Setting the width and height of frame
+		frame.setLocationRelativeTo(null);
 		frame.setSize(350, 200);
+		frame.setResizable(false);
 		// frame.setDefaultCloseOperation();
 		/*
 		 * 创建面板，这个类似于 HTML 的 div 标签 我们可以创建多个面板并在 JFrame 中指定位置 面板中我们可以添加文本字段，按钮及其他组件。

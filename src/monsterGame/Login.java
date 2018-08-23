@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import java.util.*;
 
 public class Login extends JFrame {
-	LinkedList<User> userList = new LinkedList<User>();
+	public LinkedList<User> userList = new LinkedList<User>();
 	JFrame _frame = new JFrame("Login Example");
 	JPanel _panel = new JPanel();
 	private JTextField _userText = new JTextField(20);
@@ -110,10 +110,10 @@ public class Login extends JFrame {
 			String userName = _userText.getText();
 			char[] pwd = _passwordText.getPassword();
 			if (auth(userName, pwd)) {
-				JOptionPane.showMessageDialog(Jpanel, "登陆成功", "登陆验证", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(Jpanel, "登陆成功 Login Success", "登陆验证", JOptionPane.INFORMATION_MESSAGE);
 				_userText.setText("");_passwordText.setText("");
 			}else {
-				JOptionPane.showMessageDialog(Jpanel, "账号密码错误", "登陆验证", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(Jpanel, "账号密码错误 Wrong Passwrod", "登陆验证", JOptionPane.WARNING_MESSAGE);
 				_userText.setText("");_passwordText.setText("");
 			}
 		} 
@@ -121,7 +121,7 @@ public class Login extends JFrame {
 
 
 
-	private boolean auth(String userName, char[] pwd) {
+	public boolean auth(String userName, char[] pwd) {
 		for (int i = 0; i < userList.size(); i++) {
 			if (userName.equals(userList.get(i).getUserName())) {
 				char[] pwd0 = userList.get(i).getPwd();
@@ -135,8 +135,8 @@ public class Login extends JFrame {
 					}
 				}
 				return true;
-			} else
-				return false;
+			} //else
+				//return false;
 		}
 		return false;
 	}
@@ -145,4 +145,8 @@ public class Login extends JFrame {
 		userList.addFirst(user);
 		System.out.println(userList.size());
 	}
+	public User getUser() {
+		return userList.get(0);
+	}
+	
 }

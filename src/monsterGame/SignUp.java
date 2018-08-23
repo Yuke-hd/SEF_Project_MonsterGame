@@ -122,8 +122,25 @@ public class SignUp extends JFrame {
 
 		});
 	}
+	
+	public User signUser(String username, String p0, String p1) {
+		String userName = username;
+		char[] pwd0 = p0.toCharArray();
+		char[] pwd1 = p1.toCharArray();
+		System.out.println(pwd0);
+		System.out.println(pwd1);
+		if (pwdCompare(pwd0, pwd1)) {
+			User user = new User(userName, pwd0);
+			_user=user;
+			
+		} else {
+			return null;
+		}
+		Login.admin.addUser(_user);
+		return _user;
+	}
 
-	private boolean pwdCompare(char[] pwd0, char[] pwd1) {
+	public boolean pwdCompare(char[] pwd0, char[] pwd1) {
 		if (pwd0.length != pwd1.length || pwd0.length == 0 || pwd1.length == 0) {
 			return false;
 		}

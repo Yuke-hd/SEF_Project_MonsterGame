@@ -15,14 +15,22 @@ public class User {
 	public void setUserName(String userName) {
 		_userName = userName;
 	}
-	public char[] getPwd() {
+public char[] getPwd() {
+		
 		return _pwd;
+	}
+	public String getPwdString() {
+		
+		return String.valueOf(_pwd);
 	}
 	public void setPwd(char[] pwd) {
 		_pwd = pwd;
 	}
 	public int getScore() {
 		return _score;
+	}
+	public void setScore(int score) {
+		_score=score;
 	}
 
 }

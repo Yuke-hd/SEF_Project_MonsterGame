@@ -9,21 +9,28 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import model.Grid;
+import view.UI;
+
 import java.util.*;
 
 public class Login extends JFrame {
 	public LinkedList<User> userList = new LinkedList<User>();
-	JFrame _frame = new JFrame("Login Example");
-	JPanel _panel = new JPanel();
+	JFrame frame;
+	JPanel panel;
 	private JTextField _userText = new JTextField(20);
 	private JPasswordField _passwordText = new JPasswordField(20);
 	static Login admin = new Login();
 
 	public static void main(String[] args) {
-		User administrator = new User("admin", "password".toCharArray());
+		admin.Login0();
+	}
+	public void Login0() {
+		User administrator = new User("123", "123".toCharArray());
 		admin.userList.add(administrator);
 		// 创建 JFrame 实例
-		JFrame frame = new JFrame("Login");
+		frame = new JFrame("Login");
 		// Setting the width and height of frame
 		frame.setLocationRelativeTo(null);
 		frame.setSize(350, 200);
@@ -32,7 +39,7 @@ public class Login extends JFrame {
 		/*
 		 * 创建面板，这个类似于 HTML 的 </div> 标签 我们可以创建多个面板并在 JFrame 中指定位置 面板中我们可以添加文本字段，按钮及其他组件。
 		 */
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		// 添加面板
 		frame.add(panel);
 		panel.setLocation(1000, 100);
@@ -112,6 +119,8 @@ public class Login extends JFrame {
 			if (auth(userName, pwd)) {
 				JOptionPane.showMessageDialog(Jpanel, "登陆成功 Login Success", "登陆验证", JOptionPane.INFORMATION_MESSAGE);
 				_userText.setText("");_passwordText.setText("");
+				frame.dispose();
+				UI ui = new UI();
 			}else {
 				JOptionPane.showMessageDialog(Jpanel, "账号密码错误 Wrong Passwrod", "登陆验证", JOptionPane.WARNING_MESSAGE);
 				_userText.setText("");_passwordText.setText("");

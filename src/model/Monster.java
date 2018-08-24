@@ -4,9 +4,18 @@ public class Monster extends Unit {
 
 	int _monXPos;
 	int _monYPos;
+	boolean mark=false;
+	public boolean getMark() {
+		return mark;
+	}
+
+	public void setMark(boolean mark) {
+		this.mark = mark;
+	}
 	Cell _mon;
 
 	public Monster(int x, int y) {
+		super(x, y);
 		_monXPos = x;
 		_monYPos = y;
 		_mon = new Cell(_monXPos, _monYPos);
@@ -16,7 +25,7 @@ public class Monster extends Unit {
 		return _mon;
 	}
 
-	public void chaseLogic0(int px, int py, int size) {
+	public void logic0(int px, int py, int size) {
 		int mx = _monXPos;
 		int my = _monYPos;
 		if (mx == 0 || mx == (size - 1) / 2 || mx == (size - 1)){
@@ -64,6 +73,44 @@ public class Monster extends Unit {
 				_mon.setY(_monYPos);
 				return;
 			}
+		}
+	}
+	public void logic1(int size) {
+		int mx = _monXPos;
+		int my = _monYPos;
+		setMark(true);
+		if (my == 0 || my == (size - 1) / 2 || my == (size - 1)){
+			if (mx>(size - 1) / 2) {
+				_monXPos = mx - 1;
+				_mon.setX(_monXPos);
+				return;
+			}else if (mx<(size - 1) / 2) {
+				_monXPos = mx + 1;
+				_mon.setX(_monXPos);
+				return;
+			}
+		}
+		if (mx == 0 || mx == (size - 1) / 2 || mx == (size - 1)){
+			if (my>(size - 1) / 2) {
+				_monYPos = my - 1;
+				_mon.setY(_monYPos);
+				return;
+			}else if (my<(size - 1) / 2) {
+				_monYPos = my + 1;
+				_mon.setY(_monYPos);
+				return;
+			}
+		}
+		
+	}
+	public void chase(int px, int py, int size) {
+		int mx = _monXPos;
+		int my = _monYPos;
+		if (my==(size - 1) / 2||mx==(size - 1) / 2) {
+			setMark(false);
+			logic0(px, py, size);
+		}else {
+			logic1(size);
 		}
 	}
 	}

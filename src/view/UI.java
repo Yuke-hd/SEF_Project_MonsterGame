@@ -40,9 +40,9 @@ public class UI extends JFrame implements KeyListener {
 		mp = new gridPanel();
 		frame.add(mp);
 		frame.addKeyListener(this);
-		frame.setSize(1000, 1000);
+		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setVisible(true);
 	}
 
@@ -59,7 +59,7 @@ public class UI extends JFrame implements KeyListener {
 				// cellLsit.get(i).getY());
 				try {
 					image = ImageIO.read(new File("res//head2.png"));
-					g.drawImage(image, cellLsit.get(i).getX() * 80, cellLsit.get(i).getY() * 80, 50, 50, null);
+					g.drawImage(image, cellLsit.get(i).getX() * 50, cellLsit.get(i).getY() * 50, 50, 50, null);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -67,7 +67,7 @@ public class UI extends JFrame implements KeyListener {
 			}
 			try {
 				image = ImageIO.read(new File("res//body.png"));
-				g.drawImage(image, player.getPlayer().getX() * 80, player.getPlayer().getY() * 80, 50, 50, null);
+				g.drawImage(image, player.getPlayer().getX() * 50, player.getPlayer().getY() * 50, 50, 50, null);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -75,7 +75,7 @@ public class UI extends JFrame implements KeyListener {
 			for (int i = 0; i < 2; i++) {
 				try {
 					image = ImageIO.read(new File("res//body4.png"));
-					g.drawImage(image, monster[i].getMon().getX() * 80, monster[i].getMon().getY() * 80, 50, 50, null);
+					g.drawImage(image, monster[i].getMon().getX() * 50, monster[i].getMon().getY() * 50, 50, 50, null);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -106,44 +106,71 @@ public class UI extends JFrame implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		int x = 0;
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			int xpos = player.getPlayer().getX();
+			x = 1;
+
+		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+			x = 2;
+
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			x = 3;
+
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			x = 4;
+
+		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			x = 5;
+
+		}else
+			;
+		int xpos;
+		int ypos;
+
+		switch (x) {
+		case 1:
+			xpos = player.getPlayer().getX();
 			if (xpos == 0 || xpos == (_game.getSize() - 1) / 2 || xpos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getY() < _game.getSize() - 1) {
 					player.getPlayer().setY(player.getPlayer().getY() + 1);
-					System.out.println("down");
+					System.out.println("down");break;
 				}
+
 			} else
-				System.out.println("out of border");
-		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			int xpos = player.getPlayer().getX();
+				System.out.println("out of border");return;
+			
+		case 2:
+			xpos = player.getPlayer().getX();
 			if (xpos == 0 || xpos == (_game.getSize() - 1) / 2 || xpos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getY() > 0) {
 					player.getPlayer().setY(player.getPlayer().getY() - 1);
-					System.out.println("up");
+					System.out.println("up");break;
 				}
 			} else
-				System.out.println("out of border");
-		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			int ypos = player.getPlayer().getY();
+				System.out.println("out of border");return;
+		case 3:
+			ypos = player.getPlayer().getY();
 			if (ypos == 0 || ypos == (_game.getSize() - 1) / 2 || ypos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getX() < _game.getSize() - 1) {
 					player.getPlayer().setX(player.getPlayer().getX() + 1);
-					System.out.println("to right");
+					System.out.println("to right");break;
 				}
 			} else
-				System.out.println("out of border");
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			int ypos = player.getPlayer().getY();
+				System.out.println("out of border");return;
+		case 4:
+			ypos = player.getPlayer().getY();
 			if (ypos == 0 || ypos == (_game.getSize() - 1) / 2 || ypos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getX() > 0) {
 					player.getPlayer().setX(player.getPlayer().getX() - 1);
-					System.out.println("to left");
+					System.out.println("to left");break;
 				}
 			} else
-				System.out.println("out of border");
-		} else {
-
+				System.out.println("out of border");return;
+		case 5:
+			JOptionPane.showMessageDialog(mp, "Game pause", "Game", JOptionPane.WARNING_MESSAGE);
+			return;
+		default:
+			return;
 		}
 		chase();
 		frame.add(mp);
@@ -165,9 +192,14 @@ public class UI extends JFrame implements KeyListener {
 	}
 
 	public void chase() {
-		
-		monster[0].chaseLogic0(player.getPlayer().getX(), player.getPlayer().getY(), _game.getSize());
-		monster[1].chaseLogic0(player.getPlayer().getX(), player.getPlayer().getY(), _game.getSize());
+		int distance = Math.abs(monster[0].getMon().getX() - monster[1].getMon().getX())
+				+ Math.abs(monster[0].getMon().getY() - monster[1].getMon().getY());
+		System.out.println(distance);
+		if (distance < 5 || monster[0].getMark()) {
+			monster[0].chase(player.getPlayer().getX(), player.getPlayer().getY(), _game.getSize());
+		} else
+			monster[0].logic0(player.getPlayer().getX(), player.getPlayer().getY(), _game.getSize());
+		monster[1].logic0(player.getPlayer().getX(), player.getPlayer().getY(), _game.getSize());
 
 	}
 }

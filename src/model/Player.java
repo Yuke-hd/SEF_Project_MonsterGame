@@ -6,6 +6,7 @@ public class Player extends Unit{
 	int _playerYPos;
 	Cell _player;
 	public Player(int x,int y) {
+		super(x, y);
 		_playerXPos =x;
 		_playerYPos =y;
 		_player = new Cell(_playerXPos, _playerYPos);

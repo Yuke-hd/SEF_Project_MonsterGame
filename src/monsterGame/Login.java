@@ -118,12 +118,12 @@ public class Login extends JFrame {
 			char[] pwd = _passwordText.getPassword();
 			if (auth(userName, pwd)) {
 				JOptionPane.showMessageDialog(Jpanel, "登陆成功 Login Success", "登陆验证", JOptionPane.INFORMATION_MESSAGE);
-				_userText.setText("");_passwordText.setText("");
+				_userText.setText("123");_passwordText.setText("123");
 				//frame.dispose();
 				UI ui = new UI();
 			}else {
 				JOptionPane.showMessageDialog(Jpanel, "账号密码错误 Wrong Passwrod", "登陆验证", JOptionPane.WARNING_MESSAGE);
-				_userText.setText("");_passwordText.setText("");
+				_userText.setText("123");_passwordText.setText("123");
 			}
 		} 
 	}

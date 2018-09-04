@@ -30,66 +30,67 @@ public class Monster extends Unit {
 		int my = _monYPos;
 		if (mx == 0 || mx == (size - 1) / 2 || mx == (size - 1)){
 			if (my > py) {
-				_monYPos = my - 1;
-				_mon.setY(_monYPos);
+				moveLeft();
 				return;
 			}
 			if (my < py) {
-				_monYPos = my + 1;
-				_mon.setY(_monYPos);
+				moveRight();
 				return;
 			}
 		}else {
 			if (mx > px) {
-				_monXPos = mx - 1;
-				_mon.setX(_monXPos);
+				moveUp();
 				return;
 			}
 			if (mx < px) {
-				_monXPos = mx + 1;
-				_mon.setX(_monXPos);
+				moveDown();
 				return;
 			}
 		}
 		if (my == 0 || my == (size - 1) / 2 || my == (size - 1)){
 			if (mx > px) {
-				_monXPos = mx - 1;
-				_mon.setX(_monXPos);
+				moveUp();
 				return;
 			}
 			if (mx < px) {
-				_monXPos = mx + 1;
-				_mon.setX(_monXPos);
+				moveDown();
 				return;
 			}
 		}else {
 			if (my > py) {
-				_monYPos = my - 1;
-				_mon.setY(_monYPos);
+				moveLeft();
 				return;
 			}
 			if (my < py) {
-				_monYPos = my + 1;
-				_mon.setY(_monYPos);
+				moveRight();
 				return;
 			}
 		}
 	}
+	
+	private void moveUp() {
+		_monXPos = _monXPos - 1;
+		_mon.setX(_monXPos);
+	}
+	
+	private void moveDown() {
+		_monXPos = _monXPos + 1;
+		_mon.setX(_monXPos);
+	}
+	private void moveLeft() {
+		_monYPos = _monYPos - 1;
+		_mon.setY(_monYPos);		
+	}
+
+	private void moveRight() {
+		_monYPos = _monYPos + 1;
+		_mon.setY(_monYPos);
+	}
+
 	public void logic1(int size) {
 		int mx = _monXPos;
 		int my = _monYPos;
 		setMark(true);
-		if (my == 0 || my == (size - 1) / 2 || my == (size - 1)){
-			if (mx>(size - 1) / 2) {
-				_monXPos = mx - 1;
-				_mon.setX(_monXPos);
-				return;
-			}else if (mx<(size - 1) / 2) {
-				_monXPos = mx + 1;
-				_mon.setX(_monXPos);
-				return;
-			}
-		}
 		if (mx == 0 || mx == (size - 1) / 2 || mx == (size - 1)){
 			if (my>(size - 1) / 2) {
 				_monYPos = my - 1;
@@ -101,16 +102,29 @@ public class Monster extends Unit {
 				return;
 			}
 		}
+		if (my == 0 || my == (size - 1) / 2 || my == (size - 1)){
+			if (mx>(size - 1) / 2) {
+				_monXPos = mx - 1;
+				_mon.setX(_monXPos);
+				return;
+			}else if (mx<(size - 1) / 2) {
+				_monXPos = mx + 1;
+				_mon.setX(_monXPos);
+				return;
+			}
+		}
+		
 		
 	}
 	public void chase(int px, int py, int size) {
 		int mx = _monXPos;
 		int my = _monYPos;
-		if (my==(size - 1) / 2||mx==(size - 1) / 2) {
+		if (my==(size - 1) / 2&&mx==(size - 1) / 2) {
 			setMark(false);
 			logic0(px, py, size);
 		}else {
 			logic1(size);
 		}
 	}
+	
 	}

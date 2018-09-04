@@ -66,7 +66,7 @@ public class UI extends JFrame implements KeyListener {
 				}
 			}
 			try {
-				image = ImageIO.read(new File("res//body.png"));
+				image = ImageIO.read(new File("res//Alliance.png"));//player
 				g.drawImage(image, player.getPlayer().getX() * 50, player.getPlayer().getY() * 50, 50, 50, null);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -74,7 +74,7 @@ public class UI extends JFrame implements KeyListener {
 			}
 			for (int i = 0; i < 2; i++) {
 				try {
-					image = ImageIO.read(new File("res//body4.png"));
+					image = ImageIO.read(new File("res//Horde.png"));//monster
 					g.drawImage(image, monster[i].getMon().getX() * 50, monster[i].getMon().getY() * 50, 50, 50, null);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -195,7 +195,7 @@ public class UI extends JFrame implements KeyListener {
 		int distance = Math.abs(monster[0].getMon().getX() - monster[1].getMon().getX())
 				+ Math.abs(monster[0].getMon().getY() - monster[1].getMon().getY());
 		System.out.println(distance);
-		if (distance < 5 || monster[0].getMark()) {
+		if (distance < 3 || monster[0].getMark()) {
 			monster[0].chase(player.getPlayer().getX(), player.getPlayer().getY(), _game.getSize());
 		} else
 			monster[0].logic0(player.getPlayer().getX(), player.getPlayer().getY(), _game.getSize());

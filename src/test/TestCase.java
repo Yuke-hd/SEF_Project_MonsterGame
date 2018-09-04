@@ -41,16 +41,32 @@ public class TestCase {
 	}
 
 	@Test
-	public void test() {
-		admin.addUser(a);
-		assertTrue(test0.pwdCompare(pwd.toCharArray(), pwd0.toCharArray()));//test if two password is same signup success
-		assertFalse(test0.pwdCompare(pwd.toCharArray(), pwd1.toCharArray()));//test if two password is not same signup fail
-		assertEquals(a, admin.userList.get(0));//test if a user is successfully added
-		assertEquals("abc",a.getUserName());//test if the username matches
-		assertEquals("123456",a.getPwdString());//test if the password matches
-		assertTrue(admin.auth(username, pwd.toCharArray()));//test if the username/password combination is correct, login success
-		assertFalse(admin.auth("cba", pwd.toCharArray()));//test if the username/password combination is not correct, login fail
-		assertEquals(100, a.getScore());//test if read correct value for score.
+	public void testSignUp() {
+		//SignUp
+		assertTrue(test0.pwdCompare(pwd.toCharArray(), pwd0.toCharArray()));
+		//test if two password is same signup success
+		assertFalse(test0.pwdCompare(pwd.toCharArray(), pwd1.toCharArray()));
+		//test if two password is not same signup fail
+	}
+	@Test
+	public void testLogin() {
+		//Login
+		assertTrue(admin.auth(username, pwd.toCharArray()));
+		//test if the username/password combination is correct, login success
+		assertFalse(admin.auth("cba", pwd.toCharArray()));
+		//test if the username/password combination is not correct, login fail
+	}
+	@Test
+	public void testUser() {
+		//User
+		assertEquals(a, admin.userList.get(0));
+		//test if a user is successfully added
+		assertEquals("abc",a.getUserName());
+		//test if the username matches
+		assertEquals("123456",a.getPwdString());
+		//test if the password matches
+		assertEquals(100, a.getScore());
+		//test if read correct value for score from user object.
 	}
 
 }

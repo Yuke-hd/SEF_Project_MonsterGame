@@ -2,6 +2,8 @@ package monsterGame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,7 +16,6 @@ public class SignUp extends JFrame {
 
 	JFrame frame = new JFrame("Sign Up");
 
-	
 	public SignUp() {
 		// TODO Auto-generated constructor stub
 	}
@@ -93,13 +94,14 @@ public class SignUp extends JFrame {
 				System.out.println(pwd1);
 				if (pwdCompare(pwd0, pwd1)) {
 					User user = new User(userName, pwd0);
-					_user=user;
+					_user = user;
 					panel.remove(signButton);
 					returnButton(panel);
 					panel.repaint();
 				} else {
 					return;
 				}
+				writeFile(userName,String.valueOf(pwd0));
 				userText.setText("");
 				passwordText0.setText("");
 				passwordText1.setText("");
@@ -122,7 +124,7 @@ public class SignUp extends JFrame {
 
 		});
 	}
-	
+
 	public User signUser(String username, String p0, String p1) {
 		String userName = username;
 		char[] pwd0 = p0.toCharArray();
@@ -131,13 +133,29 @@ public class SignUp extends JFrame {
 		System.out.println(pwd1);
 		if (pwdCompare(pwd0, pwd1)) {
 			User user = new User(userName, pwd0);
-			_user=user;
-			
+			_user = user;
+			writeFile(userName,p0);
 		} else {
 			return null;
 		}
+		
 		Login.admin.addUser(_user);
 		return _user;
+	}
+
+	public void writeFile(String username, String pwd) {
+		try {
+			/* 写入Txt文件 */
+			File writename = new File("res//user.txt"); // 相对路径，如果没有则要建立一个新的output.txt文件
+			//writename.createNewFile(); // 创建新文件
+			BufferedWriter out = new BufferedWriter(new FileWriter(writename,true));
+			System.out.println(username+" "+pwd);
+			out.write(username+"\t"+pwd+"\r\n"); // \r\n即为换行
+			out.flush(); // 把缓存区内容压入文件
+			out.close(); // 最后记得关闭文件
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean pwdCompare(char[] pwd0, char[] pwd1) {
@@ -150,6 +168,5 @@ public class SignUp extends JFrame {
 			}
 		}
 		return true;
-
 	}
 }

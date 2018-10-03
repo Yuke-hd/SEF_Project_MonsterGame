@@ -1,6 +1,8 @@
 package monsterGame;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 	private String _userName;
 	private char[] _pwd;
 	private int _score;
@@ -9,6 +11,13 @@ public class User {
 		_pwd = pwd;
 		_score = 0;
 	}
+	
+	public User(String userName, char[] pwd,int score) {
+		_userName = userName;
+		_pwd = pwd;
+		_score = score;
+	}
+	
 	public String getUserName() {
 		return _userName;
 	}

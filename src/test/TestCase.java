@@ -22,18 +22,14 @@ public class TestCase {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	String username="abc";
-	String pwd="123456";
-	String pwd0="123456";
-	String pwd1="12340056";
-	User a = new User(username, pwd.toCharArray());
-	User b = new User("username0", "password".toCharArray());
 	Login admin = new Login();
 	SignUp test0 = new SignUp();
+	
+	
 	@Before
 	public void setUp() throws Exception {
-		a.setScore(100);
-		
+		User test = new User("abc", "123456".toCharArray());
+		admin.userList.add(test);
 	}
 
 	@After
@@ -41,32 +37,51 @@ public class TestCase {
 	}
 
 	@Test
-	public void testSignUp() {
-		//SignUp
-		assertTrue(test0.pwdCompare(pwd.toCharArray(), pwd0.toCharArray()));
-		//test if two password is same signup success
-		assertFalse(test0.pwdCompare(pwd.toCharArray(), pwd1.toCharArray()));
-		//test if two password is not same signup fail
+	public void testSignUp1() {
+		// SignUp
+		char[] pwd = "123456".toCharArray();
+		char[] pwd0 = "123456".toCharArray();
+		boolean result = test0.pwdCompare(pwd, pwd0);
+		assertTrue(result);
+		// test if two password is same signup success
 	}
+
 	@Test
-	public void testLogin() {
-		//Login
-		assertTrue(admin.auth(username, pwd.toCharArray()));
-		//test if the username/password combination is correct, login success
-		assertFalse(admin.auth("cba", pwd.toCharArray()));
-		//test if the username/password combination is not correct, login fail
+	public void testSignUp2() {
+		char[] pwd1 = "123456".toCharArray();
+		char[] pwd2 = "1234567".toCharArray();
+		boolean result = test0.pwdCompare(pwd1, pwd2);
+		assertFalse(result);
+		// test if two password is not same signup fail
 	}
+
 	@Test
-	public void testUser() {
-		//User
-		assertEquals(a, admin.userList.get(0));
-		//test if a user is successfully added
-		assertEquals("abc",a.getUserName());
-		//test if the username matches
-		assertEquals("123456",a.getPwdString());
-		//test if the password matches
-		assertEquals(100, a.getScore());
-		//test if read correct value for score from user object.
+	public void testLogin1() {
+		// Login
+		String username = "abc";
+		char[] pwd = "123456".toCharArray();
+		boolean result = admin.auth(username, pwd);
+		assertTrue(result);
+		// test if the username/password combination is correct, login success
+	}
+
+	@Test
+	public void testLogin2() {
+		String username = "cba";
+		char[] pwd = "123456".toCharArray();
+		boolean result = admin.auth(username, pwd);
+		assertFalse(result);
+		// test if the username/password combination is not correct, login fail
+	}
+
+
+	@Test
+	public void testUser1() {
+		User a = new User("abc", "123456".toCharArray());
+		a.setScore(100);
+		int score = a.getScore();
+		assertEquals(100, score);
+		// test if read correct value for score from user object.
 	}
 
 }

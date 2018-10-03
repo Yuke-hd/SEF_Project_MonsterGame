@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -18,8 +19,10 @@ import model.Cell;
 import model.Grid;
 import model.Monster;
 import model.Player;
+import monsterGame.User;
 
 public class UI extends JFrame implements KeyListener {
+	User _user;
 	Grid _game;
 	gridPanel mp = null;
 	int rnd1;
@@ -27,8 +30,14 @@ public class UI extends JFrame implements KeyListener {
 	Player player;
 	Monster[] monster = new Monster[2];
 	JFrame frame = new JFrame("UI");
+	protected int stepCount;
 
-	public UI() {
+	public UI(User user) {
+		stepCount=0;
+		_user=user;
+	}
+	
+	public void startGame() {
 		Grid game = new Grid(11);
 		_game = game;
 		rndPos();
@@ -38,7 +47,10 @@ public class UI extends JFrame implements KeyListener {
 			monster[x] = new Monster(rnd1, rnd2);
 		}
 		mp = new gridPanel();
+		Label userName = new Label(_user.getUserName());
+		frame.setTitle(_user.getUserName()+"'s session");
 		frame.add(mp);
+		//frame.add(userName);
 		frame.addKeyListener(this);
 		frame.setSize(600, 600);
 		frame.setLocationRelativeTo(null);
@@ -101,7 +113,6 @@ public class UI extends JFrame implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -133,7 +144,7 @@ public class UI extends JFrame implements KeyListener {
 			if (xpos == 0 || xpos == (_game.getSize() - 1) / 2 || xpos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getY() < _game.getSize() - 1) {
 					player.getPlayer().setY(player.getPlayer().getY() + 1);
-					System.out.println("down");break;
+					System.out.println("down");stepCount++;break;
 				}
 
 			} else
@@ -144,7 +155,7 @@ public class UI extends JFrame implements KeyListener {
 			if (xpos == 0 || xpos == (_game.getSize() - 1) / 2 || xpos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getY() > 0) {
 					player.getPlayer().setY(player.getPlayer().getY() - 1);
-					System.out.println("up");break;
+					System.out.println("up");stepCount++;break;
 				}
 			} else
 				System.out.println("out of border");return;
@@ -153,7 +164,7 @@ public class UI extends JFrame implements KeyListener {
 			if (ypos == 0 || ypos == (_game.getSize() - 1) / 2 || ypos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getX() < _game.getSize() - 1) {
 					player.getPlayer().setX(player.getPlayer().getX() + 1);
-					System.out.println("to right");break;
+					System.out.println("to right");stepCount++;break;
 				}
 			} else
 				System.out.println("out of border");return;
@@ -162,7 +173,7 @@ public class UI extends JFrame implements KeyListener {
 			if (ypos == 0 || ypos == (_game.getSize() - 1) / 2 || ypos == (_game.getSize() - 1)) {
 				if (player.getPlayer().getX() > 0) {
 					player.getPlayer().setX(player.getPlayer().getX() - 1);
-					System.out.println("to left");break;
+					System.out.println("to left");stepCount++;break;
 				}
 			} else
 				System.out.println("out of border");return;
@@ -172,14 +183,15 @@ public class UI extends JFrame implements KeyListener {
 		default:
 			return;
 		}
-		chase();
+		if (stepCount%2==0) {
+		chase();}
 		frame.add(mp);
 		frame.repaint();
-
 		if ((player.getPlayer().getX() == monster[0].getMon().getX()
 				&& player.getPlayer().getY() == monster[0].getMon().getY())
 				|| (player.getPlayer().getX() == monster[1].getMon().getX()
 						&& player.getPlayer().getY() == monster[1].getMon().getY())) {
+			_user.setScore(_user.getScore()+stepCount);
 			JOptionPane.showMessageDialog(mp, "You Lose", "Game", JOptionPane.WARNING_MESSAGE);
 			frame.dispose();
 		}

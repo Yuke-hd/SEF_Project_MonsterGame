@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import control.SQL;
+
 public class SignUp extends JFrame {
 	User _user;
 
@@ -20,7 +22,7 @@ public class SignUp extends JFrame {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User signUp0() {
+	public void signUp0() {
 		// SignUp signUp = new SignUp();
 		// Setting the width and height of frame
 		frame.setSize(350, 200);
@@ -40,7 +42,6 @@ public class SignUp extends JFrame {
 
 		// 设置界面可见
 		frame.setVisible(true);
-		return _user;
 	}
 
 	private void placeComponents(JPanel panel) {
@@ -101,12 +102,12 @@ public class SignUp extends JFrame {
 				} else {
 					return;
 				}
-				writeFile(userName,String.valueOf(pwd0));
 				userText.setText("");
 				passwordText0.setText("");
 				passwordText1.setText("");
-				System.out.println(_user.getUserName());
+				System.out.println(_user.getUserName()+" regsited");
 				Login.admin.addUser(_user);
+				SQL.insertData(_user);
 			}
 		});
 
@@ -123,39 +124,6 @@ public class SignUp extends JFrame {
 			}
 
 		});
-	}
-
-	public User signUser(String username, String p0, String p1) {
-		String userName = username;
-		char[] pwd0 = p0.toCharArray();
-		char[] pwd1 = p1.toCharArray();
-		System.out.println(pwd0);
-		System.out.println(pwd1);
-		if (pwdCompare(pwd0, pwd1)) {
-			User user = new User(userName, pwd0);
-			_user = user;
-			writeFile(userName,p0);
-		} else {
-			return null;
-		}
-		
-		Login.admin.addUser(_user);
-		return _user;
-	}
-
-	public void writeFile(String username, String pwd) {
-		try {
-			/* 写入Txt文件 */
-			File writename = new File("res//user.txt"); // 相对路径，如果没有则要建立一个新的output.txt文件
-			//writename.createNewFile(); // 创建新文件
-			BufferedWriter out = new BufferedWriter(new FileWriter(writename,true));
-			System.out.println(username+" "+pwd);
-			out.write(username+"\t"+pwd+"\r\n"); // \r\n即为换行
-			out.flush(); // 把缓存区内容压入文件
-			out.close(); // 最后记得关闭文件
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public boolean pwdCompare(char[] pwd0, char[] pwd1) {

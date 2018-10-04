@@ -12,17 +12,17 @@ public class Player extends Unit{
 		_player = new Cell(_playerXPos, _playerYPos);
 		
 	}
-	public int getPlayerXPos() {
-		return _playerXPos;
+	public int getX() {
+		return _player.getX();
 	}
-	public void setPlayerXPos(int _playerXPos) {
-		this._playerXPos = _playerXPos;
+	public void setX(int playerXPos) {
+		_player.setX(playerXPos);
 	}
-	public int getPlayerYPos() {
-		return _playerYPos;
+	public int getY() {
+		return _player.getY();
 	}
-	public void setPlayerYPos(int _playerYPos) {
-		this._playerYPos = _playerYPos;
+	public void setY(int playerYPos) {
+		_player.setY(playerYPos);
 	}
 	public Cell getPlayer() {
 		return _player;

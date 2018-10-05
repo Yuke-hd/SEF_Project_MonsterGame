@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import control.SQL;
-import monsterGame.User;
+import model.User;
 
 public class LeaderBoard {
 	JFrame frame = new JFrame();

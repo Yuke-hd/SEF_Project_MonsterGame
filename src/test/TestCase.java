@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import model.User;
 import monsterGame.Login;
 import monsterGame.SignUp;
-import monsterGame.User;
 
 public class TestCase {
 

@@ -8,7 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import monsterGame.User;
+import model.Admin;
+import model.User;
 
 public class SQL {
 	final static String driver = "org.hsqldb.jdbc.JDBCDriver";
@@ -30,8 +31,13 @@ public class SQL {
 			String u=result.getString(1);
 			char[] pwd = result.getString(2).toCharArray();
 			int s = result.getInt(3);
-			User k = new User(u, pwd,s);
-			user.add(k);
+			if (u.equals("admin")) {
+				Admin k = new Admin(u, pwd,s);user.add(k);
+			}else {
+				User k = new User(u, pwd,s);user.add(k);
+			}
+			
+			
 			}
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
@@ -40,7 +46,7 @@ public class SQL {
 		return user;
 	}
 
-	public static void insertData(User user) {
+	public static void insertUser(User user) {
 		Connection con = null;
 		String sql = "INSERT INTO User (username, password, score) "
 				+ " Values (?,?,?)";
@@ -68,6 +74,19 @@ public class SQL {
 			e.printStackTrace(System.err);
 		}
 		
+	}
+	
+	public static void deleteUser(String username) {
+		String sql = "Delete from User where username = ?";
+		try (Connection con = DriverManager.getConnection(dbPath, "SA", "");
+				PreparedStatement stmt = con.prepareStatement(sql);) {
+			stmt.setString(1, username);
+			stmt.executeUpdate();
+
+			System.out.println("User "+username+ " deleted.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void update(String username, int score) {

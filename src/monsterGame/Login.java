@@ -19,6 +19,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import control.SQL;
+import model.Admin;
+import model.User;
+import view.AdminMenu;
 import view.LeaderBoard;
 import view.UI;
 
@@ -28,10 +31,12 @@ public class Login extends JFrame implements Serializable {
 	JPanel panel;
 	private JTextField _userText = new JTextField(20);
 	private JPasswordField _passwordText = new JPasswordField(20);
-	static Login admin = new Login();
+	public static Login control = new Login();
+	int _gameTime=50;
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
-		admin.Login0();
+
+		control.Login0();
 	}
 
 	public void Login0() throws IOException {
@@ -48,14 +53,14 @@ public class Login extends JFrame implements Serializable {
 		panel = new JPanel();
 		// 添加面板
 		frame.add(panel);
-		panel.setLocation(1000, 100);
+		//panel.setLocation(1000, 100);
 		/*
 		 * 调用用户定义的方法并添加组件到面板
 		 */
-		admin.placeComponents(panel);
+		control.placeComponents(panel);
 		// 设置界面可见
 		frame.setVisible(true);
-		//importUser();
+		// importUser();
 		for (int i = 0; i < userList.size(); i++) {
 			System.out.println(userList.get(i).getUserName());
 		}
@@ -105,7 +110,7 @@ public class Login extends JFrame implements Serializable {
 		JButton signButton = new JButton("sign up");
 		signButton.setBounds(180, 90, 90, 25);
 		panel.add(signButton);
-		
+
 		JButton scoreButton = new JButton("Leader Board");
 		scoreButton.setBounds(180, 120, 90, 25);
 		panel.add(scoreButton);
@@ -118,7 +123,6 @@ public class Login extends JFrame implements Serializable {
 		Monitor3 score = new Monitor3();
 		scoreButton.addActionListener(score);
 	}
-
 
 	class Monitor0 implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -135,12 +139,18 @@ public class Login extends JFrame implements Serializable {
 			char[] pwd = _passwordText.getPassword();
 			try {
 				User player = auth0(userName, pwd);
-				System.out.println(player.getUserName());
+				System.out.println(player.getUserName() + " " + player.getClass().getSimpleName());
 				JOptionPane.showMessageDialog(Jpanel, "登陆成功 Login Success", "登陆验证", JOptionPane.INFORMATION_MESSAGE);
+				if (player instanceof Admin) {
+					AdminMenu adminMenu = new AdminMenu(player);
+					adminMenu.show();
+				} else {
+					UI instance = new UI(player, _gameTime);
+					instance.startGame();
+				}
 				_userText.setText("123");
 				_passwordText.setText("123");
-				UI instance = new UI(player);
-				instance.startGame();
+
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(Jpanel, "账号密码错误 Wrong Passwrod", "登陆验证", JOptionPane.WARNING_MESSAGE);
 				_userText.setText("123");
@@ -167,6 +177,7 @@ public class Login extends JFrame implements Serializable {
 
 	public User auth0(String userName, char[] pwd) throws Exception {
 		User user;
+		this.userList = SQL.importUser();
 		for (int i = 0; i < userList.size(); i++) {
 			if (userName.equals(userList.get(i).getUserName())) {
 				char[] pwd0 = userList.get(i).getPwd();
@@ -230,4 +241,11 @@ public class Login extends JFrame implements Serializable {
 		return userList.get(0);
 	}
 
+	public int getGameTime() {
+		return _gameTime;
+	}
+
+	public void setGameTime(int gameTime) {
+		_gameTime = gameTime;
+	}
 }

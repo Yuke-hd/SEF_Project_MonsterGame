@@ -1,8 +1,6 @@
-package monsterGame;
+package model;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class User {
 	private String _userName;
 	private char[] _pwd;
 	private int _score;

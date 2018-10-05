@@ -12,8 +12,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import control.SQL;
+import model.User;
 
 public class SignUp extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	User _user;
 
 	JFrame frame = new JFrame("Sign Up");
@@ -106,8 +112,8 @@ public class SignUp extends JFrame {
 				passwordText0.setText("");
 				passwordText1.setText("");
 				System.out.println(_user.getUserName()+" regsited");
-				Login.admin.addUser(_user);
-				SQL.insertData(_user);
+				Login.control.addUser(_user);
+				SQL.insertUser(_user);
 			}
 		});
 

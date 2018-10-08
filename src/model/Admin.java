@@ -1,6 +1,6 @@
 package model;
 
-import monsterGame.Login;
+import view.Login;
 
 public class Admin extends User{
 

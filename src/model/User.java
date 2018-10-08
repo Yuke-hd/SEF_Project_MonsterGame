@@ -4,18 +4,35 @@ public class User {
 	private String _userName;
 	private char[] _pwd;
 	private int _score;
+	private Player _player;
 	public User(String userName, char[] pwd) {
 		_userName = userName;
 		_pwd = pwd;
 		_score = 0;
+		_player= new Player();
 	}
 	
 	public User(String userName, char[] pwd,int score) {
 		_userName = userName;
 		_pwd = pwd;
 		_score = score;
+		_player= new Player();
 	}
 	
+	/**
+	 * @return the _player
+	 */
+	public Player getPlayer() {
+		return _player;
+	}
+
+	/**
+	 * @param _player the _player to set
+	 */
+	public void setPlayer(Player _player) {
+		this._player = _player;
+	}
+
 	public String getUserName() {
 		return _userName;
 	}

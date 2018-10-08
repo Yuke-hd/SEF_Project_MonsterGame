@@ -9,8 +9,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.User;
-import monsterGame.Login;
-import monsterGame.SignUp;
+import view.Login;
+import view.SignUp;
 
 public class TestCase {
 

@@ -1,4 +1,4 @@
-package monsterGame;
+package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,9 +21,6 @@ import javax.swing.JTextField;
 import control.SQL;
 import model.Admin;
 import model.User;
-import view.AdminMenu;
-import view.LeaderBoard;
-import view.UI;
 
 public class Login extends JFrame implements Serializable {
 	public ArrayList<User> userList = new ArrayList<User>();
@@ -145,7 +142,7 @@ public class Login extends JFrame implements Serializable {
 					AdminMenu adminMenu = new AdminMenu(player);
 					adminMenu.show();
 				} else {
-					UI instance = new UI(player, _gameTime);
+					GameUI instance = new GameUI(player, _gameTime);
 					instance.startGame();
 				}
 				_userText.setText("123");

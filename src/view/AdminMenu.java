@@ -18,8 +18,6 @@ import javax.swing.JTextField;
 import control.SQL;
 import javafx.scene.control.Button;
 import model.User;
-import monsterGame.Login;
-import monsterGame.SignUp;
 
 public class AdminMenu {
 	JFrame frame = new JFrame();
@@ -100,7 +98,7 @@ public class AdminMenu {
 	}
 	class Monitor1 implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			UI game = new UI(currentUser, Login.control.getGameTime());
+			GameUI game = new GameUI(currentUser, Login.control.getGameTime());
 			game.startGame();
 		}
 	}

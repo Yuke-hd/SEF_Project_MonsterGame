@@ -7,6 +7,7 @@ import java.io.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -99,6 +100,12 @@ public class SignUp extends JFrame {
 				char[] pwd1 = passwordText1.getPassword();
 				System.out.println(pwd0);
 				System.out.println(pwd1);
+				for (int i = 0; i < Login.control.userList.size(); i++) {
+					if (userName.equals(Login.control.userList.get(i).getUserName())) {
+						JOptionPane.showMessageDialog(panel, "user name already exist", "Sign up", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
 				if (pwdCompare(pwd0, pwd1)) {
 					User user = new User(userName, pwd0);
 					_user = user;
@@ -106,6 +113,7 @@ public class SignUp extends JFrame {
 					returnButton(panel);
 					panel.repaint();
 				} else {
+					JOptionPane.showMessageDialog(panel, "password does not match", "Sign up", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				userText.setText("");

@@ -16,18 +16,12 @@ import control.SQL;
 import model.User;
 
 public class SignUp extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	User _user;
 
 	JFrame frame = new JFrame("Sign Up");
 
-	public SignUp() {
-		// TODO Auto-generated constructor stub
-	}
+	public SignUp() {	}
 
 	public void signUp0() {
 		// SignUp signUp = new SignUp();

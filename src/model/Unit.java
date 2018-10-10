@@ -16,16 +16,8 @@ abstract public class Unit {
 		return XPos;
 	}
 
-	public void setX(int x) {
-		XPos = x;
-	}
-
 	public int getY() {
 		return YPos;
-	}
-
-	public void setY(int y) {
-		YPos = y;
 	}
 
 	public void moveUp() {

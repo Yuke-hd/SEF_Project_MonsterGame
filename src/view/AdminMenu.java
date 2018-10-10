@@ -1,12 +1,8 @@
 package view;
 
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import control.SQL;
-import javafx.scene.control.Button;
 import model.User;
 
 public class AdminMenu {

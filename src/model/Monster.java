@@ -59,7 +59,6 @@ public class Monster extends Unit {
 		}
 	}
 
-
 	public void logic1(int size) {
 		int mx = super.XPos;
 		int my = super.YPos;

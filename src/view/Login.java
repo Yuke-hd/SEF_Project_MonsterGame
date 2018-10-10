@@ -194,41 +194,6 @@ public class Login extends JFrame implements Serializable {
 		throw new Exception();
 	}
 
-	public boolean auth(String username0, char[] pwd0) {
-		String username;
-		char[] pwd;
-		boolean auth = false;
-		try { // 防止文件建立或读取失败，用catch捕捉错误并打印，也可以throw
-			/* 读入TXT文件 */
-			String pathname = "res//user.txt"; // 绝对路径或相对路径都可以，写入文件时演示相对路径
-			File filename = new File(pathname); // 要读取以上路径的input.txt文件
-			InputStreamReader reader = new InputStreamReader(new FileInputStream(filename)); // 建立一个输入流对象reader
-			BufferedReader br = new BufferedReader(reader); // 建立一个对象，它把文件内容转成计算机能读懂的语言
-			String line;
-			// 网友推荐更加简洁的写法
-			while ((line = br.readLine()) != null) {
-				// 一次读入一行数据
-				System.out.println(line);
-				String[] linePart = line.split("\t");
-				username = linePart[0];
-				System.out.println(username);
-				pwd = linePart[1].toCharArray();
-				System.out.println(pwd);
-				if (username.equals(username0)) {
-					for (int j = 0; j < pwd0.length; j++) {
-						if (pwd0[j] != pwd[j]) {
-							auth = false;
-						}
-					}
-					auth = true;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return auth;
-	}
-
 	public void addUser(User user) {
 		userList.add(user);
 		System.out.println(userList.size());

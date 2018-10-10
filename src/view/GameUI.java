@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import control.GameControl;
 import control.SQL;
 import model.Cell;
 import model.Grid;
@@ -29,6 +30,7 @@ public class GameUI extends JFrame implements KeyListener {
 	JFrame frame = new JFrame();
 	protected int stepCount;
 	int gameTime;
+	int diffculty=2;// 1=hard 2=normal 4=easy
 
 	public GameUI(User user, int gameTime) {
 		stepCount = 0;
@@ -65,13 +67,10 @@ public class GameUI extends JFrame implements KeyListener {
 			g.drawString("score: " + stepCount, 100, 100);
 			g.drawString("game time: " + gameTime, 100, 130);
 			for (int i = 0; i < cellLsit.size(); i++) {
-				// System.out.println("X:" + cellLsit.get(i).getX() + ",Y:" +
-				// cellLsit.get(i).getY());
 				try {
-					image = ImageIO.read(new File("res//head2.png"));
+					image = ImageIO.read(new File("res//head2.png"));// cell
 					g.drawImage(image, cellLsit.get(i).getX() * 50, cellLsit.get(i).getY() * 50, 50, 50, null);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -79,7 +78,6 @@ public class GameUI extends JFrame implements KeyListener {
 				image = ImageIO.read(new File("res//Alliance.png"));// player
 				g.drawImage(image, player.getX() * 50, player.getY() * 50, 50, 50, null);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			for (int i = 0; i < 2; i++) {
@@ -87,7 +85,6 @@ public class GameUI extends JFrame implements KeyListener {
 					image = ImageIO.read(new File("res//Horde.png"));// monster
 					g.drawImage(image, monster[i].getX() * 50, monster[i].getY() * 50, 50, 50, null);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -96,93 +93,37 @@ public class GameUI extends JFrame implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int x = 0;
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			x = 1;
-
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 			x = 2;
-
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			x = 3;
-
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			x = 4;
-
 		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			x = 5;
-
 		} else
 			;
-		int xpos;
-		int ypos;
-
-		switch (x) {
-		case 1:
-			xpos = player.getX();
-			if (xpos == 0 || xpos == (gameGrid.getSize() - 1) / 2 || xpos == (gameGrid.getSize() - 1)) {
-				if (player.getY() < gameGrid.getSize() - 1) {
-					player.moveRight();
-					System.out.println("to right");
-					break;
-				}
-
-			} else
-				System.out.println("out of border");
-			return;
-
-		case 2:
-			xpos = player.getX();
-			if (xpos == 0 || xpos == (gameGrid.getSize() - 1) / 2 || xpos == (gameGrid.getSize() - 1)) {
-				if (player.getY() > 0) {
-					player.moveLeft();
-					System.out.println("to left");
-					break;
-				}
-			} else
-				System.out.println("out of border");
-			return;
-		case 3:
-			ypos = player.getY();
-			if (ypos == 0 || ypos == (gameGrid.getSize() - 1) / 2 || ypos == (gameGrid.getSize() - 1)) {
-				if (player.getX() < gameGrid.getSize() - 1) {
-					player.moveDown();
-					System.out.println("down");
-					break;
-				}
-			} else
-				System.out.println("out of border");
-			return;
-		case 4:
-			ypos = player.getY();
-			if (ypos == 0 || ypos == (gameGrid.getSize() - 1) / 2 || ypos == (gameGrid.getSize() - 1)) {
-				if (player.getX() > 0) {
-					player.moveUp();
-					System.out.println("up");
-					break;
-				}
-			} else
-				System.out.println("out of border");
-			return;
-		case 5:
+		if (x==5) {
 			JOptionPane.showMessageDialog(gameBoard, "Game pause", "Game", JOptionPane.WARNING_MESSAGE);
 			return;
-		default:
-			return;
+		} else {
+			GameControl.playerMovement(x, player, gameGrid);
 		}
+		
 		stepCount++;
-		if (stepCount % 2 == 0) {
-			chase();
+		if (stepCount % diffculty == 0) { //this line affect the speed of the monsters
+			GameControl.chase(player,monster,gameGrid);
 		}
 		frame.add(gameBoard);
 		frame.repaint();
-		if (checkWinner()) {
+		if (GameControl.checkWinner(player,monster)) {
 			SQL.update(user.getUserName(), user.getScore() + stepCount);
 			JOptionPane.showMessageDialog(gameBoard, "You Lose\n" + "score: " + stepCount, "Game",
 					JOptionPane.WARNING_MESSAGE);
@@ -197,31 +138,6 @@ public class GameUI extends JFrame implements KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void chase() {
-		int playerX = player.getX();
-		int playerY = player.getY();
-		int gameSize = gameGrid.getSize();
-		int distance = Math.abs(monster[0].getX() - monster[1].getX())
-				+ Math.abs(monster[0].getY() - monster[1].getY());
-		System.out.println(distance);
-		if (distance < 3 || monster[0].getMark()) {
-			monster[0].chase(playerX, playerY, gameSize);
-			monster[1].logic2(playerX, playerY, gameSize);
-		} else {
-			monster[0].logic0(playerX, playerY, gameSize);
-			monster[1].logic2(playerX, playerY, gameSize);
-		}
-	}
-
-	private boolean checkWinner() {
-		boolean stat = (player.getX() == monster[0].getX() && player.getY() == monster[0].getY())
-				|| (player.getX() == monster[1].getX() && player.getY() == monster[1].getY());
-		return stat;
-	}
+	public void keyReleased(KeyEvent e) {}
 
 }
